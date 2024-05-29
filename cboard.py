@@ -5,7 +5,7 @@ import pygame
 pygame.init()
 screen = pygame.display.set_mode((480, 480))
 running = True
-l = 0
+flag = 0
 
 def board():
     size = 60
@@ -24,16 +24,17 @@ def board():
 
     for x in range (8):
         for y in range(8):
-            # draw rank number
+            # draw rank & file number/letter
             if y == 0:
+                # draw rank
                 rank = font.render(str(rankNo), True, "black", "white")
                 rankNo = rankNo - 1
                 screen.blit(rank,(y,x*size))
 
-            if y == 0:
-                file = font.render(fileLt, True, "black", "white")
+                # draw file
+                ffile = font.render(fileLt, True, "black", "white")
                 fileLt = chr(ord(fileLt)+1)
-                screen.blit(file, (size*x,470))
+                screen.blit(ffile, (size*x+53,470))
 
 while running:
     # poll for events
@@ -43,10 +44,10 @@ while running:
             running = False
 
     # fill the screen with a color to wipe away anything from last frame
-    if l == 0:
+    if flag == 0:
         board()
         pygame.display.flip()
-        l = 1
+        flag = 1
 
 
     # flip() the display to put your work on screen
