@@ -5,12 +5,21 @@ import pygame
 pygame.init()
 screenWidth = 1080
 screenHeight = 720
-screen = pygame.display.set_mode((screenWidth, screenHeight))
+screen = pygame.display.set_mode((screenWidth, screenHeight), pygame.RESIZABLE)
 running = True
 flag = 0
 
+def centerScreen():
+    screen.get_width()//2
+    screen.get_height()//2
+    return
+# todo :
+# board squares stay square with window resize
+# board is centered with the screen
+# font size is adjusted based on board size 
+# ->>> refactor code
 def board():
-    size = 60
+    size = screen.get_height() / screen.get_width()   
     font = pygame.font.SysFont(None, 20)
     rankNo = 8
     fileLt = "a"
