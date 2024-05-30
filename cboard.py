@@ -1,9 +1,9 @@
-# Example file showing a circle moving on screen
+# Example file showing x circle moving on screen
 import pygame
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((480, 480))
+screenWidth = 1080
 running = True
 flag = 0
 
