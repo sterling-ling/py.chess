@@ -1,28 +1,39 @@
-# Example file showing x circle moving on screen
+# todo :
+# [ ] board squares stay square with window resize
+#    [x] font size is adjusted based on board size 
+# [x] board is centered with the screen
+# [ ] refactor code
+#   [ ] create seperate files for board generation and __main__
+# [ ] implement FEN function
+# [ ] draw pieces to screen based on FEN string
+# [ ] chess rules (piece movement)
+
 import pygame
 
 # pygame setup
 pygame.init()
 screenWidth = 1080
 screenHeight = 720
-screen = pygame.display.set_mode((screenWidth, screenHeight), pygame.RESIZABLE)
+screen = pygame.display.set_mode((screenWidth, screenHeight))
 running = True
 flag = 0
 
-def centerScreen():
-    screen.get_width()//2
-    screen.get_height()//2
-    return
-# todo :
-# board squares stay square with window resize
-# board is centered with the screen
-# font size is adjusted based on board size 
-# ->>> refactor code
 def board():
-    size = screen.get_height() / screen.get_width()   
-    font = pygame.font.SysFont(None, 20)
+    size = 80
+    font = pygame.font.SysFont(None, (size//3))
     rankNo = 8
     fileLt = "a"
+
+    # get the screen size
+    screenWidth, screenHeight = screen.get_size()
+
+    # get grid size
+    gridWidth = size * 8
+    gridHeight = size * 8
+
+    # calculate startx and start y
+    startx = (screenWidth - gridWidth) // 2
+    starty = (screenHeight - gridHeight) // 2
 
     for x in range(8):
         for y in range(8):
@@ -34,18 +45,21 @@ def board():
                 color = "#faf0e6"
                 textc = "darkgreen"
 
-            pygame.draw.rect(screen, color, pygame.Rect(y*size,x*size,size,size))
+            rectx = startx + x * size
+            recty = starty + y * size
 
-            if y == 0:
+            pygame.draw.rect(screen, color, pygame.Rect(rectx,recty,size,size))
+
+            if x == 0:
                # draw rank
                rank = font.render(str(rankNo), True, textc, color)
                rankNo = rankNo - 1
-               screen.blit(rank,(y,x*size))
-            if  x == 7:      
+               screen.blit(rank,(rectx,recty))
+            if  y == 7:      
                # draw file
                ffile = font.render(fileLt, True, textc, color)
                fileLt = chr(ord(fileLt)+1)
-               screen.blit(ffile, (size*y+50,size*x+45))
+               screen.blit(ffile, (rectx + (size*0.875),recty + (size*0.7575)))
 
 while running:
     # poll for events
@@ -64,5 +78,3 @@ while running:
     # flip() the display to put your work on screen
 
 pygame.quit()
-
-
